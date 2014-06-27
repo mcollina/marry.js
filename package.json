@@ -1,0 +1,26 @@
+{
+  "name": "marry.js",
+  "version": "0.0.0",
+  "description": "Unification for JS",
+  "main": "marry.js",
+  "scripts": {
+    "test": "tap test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mcollina/marry.js.git"
+  },
+  "keywords": [
+    "unification",
+    "prolog"
+  ],
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mcollina/marry.js/issues"
+  },
+  "homepage": "https://github.com/mcollina/marry.js",
+  "devDependencies": {
+    "tap": "^0.4.11"
+  }
+}
