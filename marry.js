@@ -8,17 +8,23 @@ function marry(state, pattern, result) {
 
   for (key in pattern) {
 
-    var value = pattern[key]
-    if (value instanceof Variable) {
-      if (state[key] !== undefined) {
-        result.bindings[value.name] = state[key]
+    if (pattern[key] instanceof Variable) {
+      if (state[key] instanceof Variable) {
+        result.marriage[key] = pattern[key]
+        result.equalVariables[pattern[key].name] = state[key].name
+        result.equalVariables[state[key].name] = pattern[key].name
+      } else if (state[key] !== undefined) {
+        result.bindings[pattern[key].name] = state[key]
+        result.marriage[key] = state[key]
       } else {
         return null
       }
-    } else if (typeof value === 'object' && typeof state[key] === 'object') {
-      marry(state[key], value, result)
-    } else if (value !== state[key]) {
+    } else if (typeof pattern[key] === 'object' && typeof state[key] === 'object') {
+      marry(state[key], pattern[key], result.stack(key))
+    } else if (pattern[key] !== state[key]) {
       return null
+    } else {
+      result.marriage[key] = state[key]
     }
   }
 
@@ -35,6 +41,16 @@ function Variable(name) {
 
 function Result() {
   this.bindings = {}
+  this.marriage = {}
+  this.equalVariables = {}
+}
+
+Result.prototype.stack = function(key) {
+  var stacked = Object.create(this)
+  this.marriage[key] = {}
+  stacked.marriage = this.marriage[key]
+
+  return stacked
 }
 
 marry.v = Variable

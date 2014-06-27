@@ -21,6 +21,7 @@ test('simple object', function(t) {
 
   t.ok(result, 'should marry')
   t.deepEqual(result.bindings, { x: 42 }, 'should create the binding')
+  t.deepEqual(result.marriage, { hello: 42 }, 'should create the marriage')
   t.end()
 })
 
@@ -32,6 +33,7 @@ test('simple object with values', function(t) {
   })
 
   t.ok(result, 'should marry')
+  t.deepEqual(result.marriage, { hello: 42 }, 'should create the marriage')
   t.end()
 })
 
@@ -44,6 +46,7 @@ test('marry objects', function(t) {
 
   t.ok(result, 'should marry')
   t.deepEqual(result.bindings, { x: { value: 42 } }, 'should create the binding')
+  t.deepEqual(result.marriage, { hello: { value: 42 } }, 'should create the marriage')
   t.end()
 })
 
@@ -56,5 +59,20 @@ test('marry inside objects', function(t) {
 
   t.ok(result, 'should marry')
   t.deepEqual(result.bindings, { x: 42 }, 'should create the binding')
+  t.deepEqual(result.marriage, { hello: { value: 42 } }, 'should create the marriage')
+  t.end()
+})
+
+test('marry variables', function(t) {
+  var result = marry({
+    hello: { value: marry.v('y') }
+  }, {
+    hello: { value: marry.v('x') }
+  })
+
+  t.ok(result, 'should marry')
+  t.deepEqual(result.bindings, { }, 'should bind nothing')
+  t.deepEqual(result.marriage, { hello: { value: marry.v('x') } }, 'should return a marriage')
+  t.deepEqual(result.equalVariables, { 'x': 'y', 'y': 'x' }, 'should set variables as equals')
   t.end()
 })
