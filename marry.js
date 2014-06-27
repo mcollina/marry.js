@@ -1,24 +1,24 @@
 
-function marry(state, pattern) {
-  var bindings = {}
+function marry(state, pattern, result) {
+  result = result || new Result()
 
   for (key in pattern) {
 
     var value = pattern[key]
     if (value instanceof Variable) {
       if (state[key] !== undefined) {
-        bindings[value.name] = state[key]
+        result.bindings[value.name] = state[key]
       } else {
         return null
       }
+    } else if (typeof value === 'object' && typeof state[key] === 'object') {
+      marry(state[key], value, result)
     } else if (value !== state[key]) {
       return null
     }
   }
 
-  return {
-    bindings: bindings
-  }
+  return result
 }
 
 function Variable(name) {
@@ -27,6 +27,10 @@ function Variable(name) {
   }
 
   this.name = name;
+}
+
+function Result() {
+  this.bindings = {}
 }
 
 marry.v = Variable

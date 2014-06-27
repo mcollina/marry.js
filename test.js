@@ -34,3 +34,27 @@ test('simple object with values', function(t) {
   t.ok(result, 'should marry')
   t.end()
 })
+
+test('marry objects', function(t) {
+  var result = marry({
+    hello: { value: 42 }
+  }, {
+    hello: marry.v('x')
+  })
+
+  t.ok(result, 'should marry')
+  t.deepEqual(result.bindings, { x: { value: 42 } }, 'should create the binding')
+  t.end()
+})
+
+test('marry inside objects', function(t) {
+  var result = marry({
+    hello: { value: 42 }
+  }, {
+    hello: { value: marry.v('x') }
+  })
+
+  t.ok(result, 'should marry')
+  t.deepEqual(result.bindings, { x: 42 }, 'should create the binding')
+  t.end()
+})
