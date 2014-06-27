@@ -1,11 +1,4 @@
-Marry
-=====
-
-Unification for JS: we unify two object!
-
-```js
-
-var marry = require('marry')
+var marry = require('./marry')
   , object = {
         long: {
             object: 42
@@ -23,10 +16,3 @@ var marry = require('marry')
     }
 
 console.log(marry(object, pattern))
-
-```
-
-License
--------
-
-MIT
