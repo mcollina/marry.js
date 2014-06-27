@@ -1,7 +1,7 @@
 Marry
 =====
 
-Unification for JS: we unify two object!
+Unification for JS: extract variables from your JS objects.
 
 ```js
 
@@ -23,7 +23,8 @@ var marry = require('marry')
     }
 
 console.log(marry(object, pattern))
-
+// outputs
+// { bindings: { long: 42, answer: 42 } }
 ```
 
 License
