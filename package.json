@@ -1,6 +1,6 @@
 {
   "name": "marry",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Unification for JS",
   "main": "marry.js",
   "scripts": {
