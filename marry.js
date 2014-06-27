@@ -1,3 +1,7 @@
+/* Copyright (c) 2014 Matteo Collina
+ * MIT
+ * <https://github.com/mcollina/marry.js/blob/master/LICENSE>
+ */
 
 function marry(state, pattern, result) {
   result = result || new Result()
