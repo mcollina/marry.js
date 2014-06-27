@@ -73,6 +73,19 @@ test('marry variables', function(t) {
   t.ok(result, 'should marry')
   t.deepEqual(result.bindings, { }, 'should bind nothing')
   t.deepEqual(result.marriage, { hello: { value: marry.v('x') } }, 'should return a marriage')
-  t.deepEqual(result.equalVariables, { 'x': 'y', 'y': 'x' }, 'should set variables as equals')
+  t.deepEqual(result.equalVariables, { 'x': ['y'], 'y': ['x'] }, 'should set variables as equals')
+  t.end()
+})
+
+test('not marrying if variable has two values', function(t) {
+  var result = marry({
+      hello: { value: 24 }
+    , answer: 42
+  }, {
+      hello: { value: marry.v('x') }
+    , answer: marry.v('x')
+  })
+
+  t.notOk(result, 'should not marry')
   t.end()
 })

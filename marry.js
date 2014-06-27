@@ -11,9 +11,11 @@ function marry(state, pattern, result) {
     if (pattern[key] instanceof Variable) {
       if (state[key] instanceof Variable) {
         result.marriage[key] = pattern[key]
-        result.equalVariables[pattern[key].name] = state[key].name
-        result.equalVariables[state[key].name] = pattern[key].name
+        equalVariables(result.equalVariables, pattern[key].name, state[key].name)
       } else if (state[key] !== undefined) {
+        if (result.bindings[pattern[key].name] && result.bindings[pattern[key].name] !== state[key]) {
+          return null
+        }
         result.bindings[pattern[key].name] = state[key]
         result.marriage[key] = state[key]
       } else {
@@ -29,6 +31,18 @@ function marry(state, pattern, result) {
   }
 
   return result
+}
+
+function equalVariables(obj, a, b) {
+  if (!obj[a]) {
+    obj[a] = []
+  }
+  obj[a].push(b)
+
+  if (!obj[b]) {
+    obj[b] = []
+  }
+  obj[b].push(a)
 }
 
 function Variable(name) {
